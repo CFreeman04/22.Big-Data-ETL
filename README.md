@@ -1,4 +1,3 @@
-
 ### Background
 
 In this assignment, you will put your ETL skills to the test. Many of Amazon's shoppers depend on product reviews to make a purchase. Amazon makes these datasets publicly available. They are quite large and can exceed the capacity of local machines. One dataset alone contains over 1.5 million rows; with over 40 datasets, data analysis can be very demanding on the average local computer. Your first goal will be to perform the ETL process completely in the cloud and upload a DataFrame to an RDS instance. The second goal will be to use PySpark or SQL to perform a statistical analysis of selected data.
@@ -6,50 +5,36 @@ In this assignment, you will put your ETL skills to the test. Many of Amazon's s
 This Challenge contains two parts. Part 1 is required. Part 2 is optional but highly recommended to strengthen your new skills.
 
 -   **Part 1:**  Extract two Amazon customer review datasets, transform each dataset into four DataFrames, and load the DataFrames into an RDS instance.
-    
 -   **Part 2:**  Extract two Amazon customer review datasets and use either SQL or PySpark to analyze whether reviews from Amazon's Vine program are trustworthy.
     
-
 ### Before You Begin
 
-1.  Create a new repository for this project called "Big-Data-ETL".  **Do not add this homework to an existing repository**.
-    
+1.  Create a new repository for this project called "Big-Data-ETL".  **Do not add this homework to an existing repository**. 
 2.  Clone the new repository to your computer.
-    
 3.  Inside your local Git repository, create two folders, "part-1" and "part-2", corresponding to the two parts. If you are not planning on doing "part-2" then create the "part-1" folder only.
     
-
 ### Instructions
 
 #### Part 1
 
 1.  Upload the  `part_one_starter_code.ipynb`  into Google Colab and create a duplicate of this file.
-    
 2.  Explore the  [Amazon Reviews](https://s3.amazonaws.com/amazon-reviews-pds/tsv/index.txt)  datasets and pick two datasets to perform ETL.
-    
 3.  Rename each  `part_one_starter_code.ipynb`  file according to the dataset you are using. For example, if you are going to use the  [Video Game reviews](https://s3.amazonaws.com/amazon-reviews-pds/tsv/amazon_reviews_us_Video_Games_v1_00.tsv.gz)  file, rename file,  `part_one_video_games.ipynb`. Repeat the process for the duplicate file you created in Step 2.
     
-
 **Extract the Data**
 
 1.  Read in each dataset using the correct  `header`  and  `sep`  parameters.
-    
 2.  Get the number of rows in the dataset.
     
-
 **Transform the Data**
 
 For each dataset use the  `schema.sql`  file located in the Resources folder of the  `Starter_Code.zip`  file to create the four DataFrames as follows:
 
 1.  Create the "review_id_df" DataFrame with the appropriate columns and data types.
-    
 2.  Create the "products_df" DataFrame that drops the duplicates in the "product_id" and "product_title columns.
-    
 3.  Create the "customers_df" DataFrame that groups the data on the "customer_id" by the number of times a customer reviewed a product.
-    
 4.  Create the "vine_df" DataFrame that has the "review_id", "star_rating", "helpful_votes", "total_votes", and "vine" columns.
     
-
 **Load the Data into an RDS Instance**
 
 Export each DataFrame into the RDS instance to create four tables for each dataset.
@@ -74,45 +59,19 @@ But are Vine reviews truly trustworthy? Your task is to investigate whether Vine
     
 -   Submit a summary of your findings and analysis.
     
-
 ----------
 
-### Requirements
+### Vine Review Analysis
 
-These requirements are for Part 1 only, as Part 2 is optional.
+I analyzed the Sports as well as Lawn and Garden Vine Reviews.  Upon conducting this analysis of the Vine Reviews, here are the findings.  
 
-#### Extract (35 points)
+Sports Vine <br>
+![sports_vine.jpg](Images/sports_vine_review.jpg)
 
--   Uses PySpark to connect to and load the AWS datasets into DataFrames. (10 points)
--   The correct parameters are used to read in the data into a DataFrame. (15 points)
--   The first 20 rows of each DataFrame is displayed. (5 points)
--   The number of rows for each DataFrame is displayed. (5 points)
+Lawn & Garden Vine <br>
+![l&g_vine.jpg](Images/lawn_vine_review.jpg)
 
-#### Transform (45 points)
+-   Nearly half the reviews had invalid data (total votes = 0)
+-   Only 6.4% (Sports) and 5.8% (L&G) have reviews with total votes > 10
 
--   The "review_id_df" DataFrame is created with the appropriate columns and data types. (15 points)
--   The "products_df" DataFrame is created and the the duplicate values are dropped. (10 points)
--   The "customers_df" DataFrame is created and displays the number of times a customer reviewed a product grouped by the "customer_id". (10 points)
--   The "vine_df" DataFrame is created that has the "review_id", "star_rating", "helpful_votes", "total_votes", and "vine" columns. (10 points)
-
-#### Load (20 points)
-
--   The four DataFrames for each dataset are successfully loaded into an RDS instance. (20 points)
-
-
--   Download your Google Colab notebooks as  `.ipynb`  files and upload them into the "part-1" folder of your "Big-Data-ETL" Git repository.
-    
-    **IMPORTANT**
-    
-    Do not clear the outputs of your  `.ipynb`  files, and  _do not_  upload notebooks that contain your RDS password and endpoint. Delete these two items before making your notebook public!
-    
--   Ensure your repository has regular commits and a thorough  `README.md`  file to explain the ETL project.
-    
--   If you are doing "part-2" of this assignment, copy your SQL queries into  `.sql`  files and upload them into the "part-2" folder of your "Big-Data-ETL" Git repository.
-    
-
-**IMPORTANT**
-
-Remember to closely monitor any AWS resources that you choose to use! It’s crucial that you clean up and stop, or shut down any AWS resources to avoid accruing additional costs. Please refer to the  `AWS_cleanup.pdf`  and the  `AWS_check_billing.pdf`  files in the Resources folder of the  `Starter_Code.zip`  file. Or, you can download the[AWS Billing Guide](https://2u-data-curriculum-team.s3.amazonaws.com/dataviz-classroom/v1.1/AWS_check_billing.pdf).
-
-To submit your Challenge assignment, click Submit, and then provide the URL of your GitHub repository for grading.
+Based on this analysis, I believe the Vine Reviews are **NOT** trustworthy.  As a consumer, I would not put much weight into products that have such a low number of reviews.
